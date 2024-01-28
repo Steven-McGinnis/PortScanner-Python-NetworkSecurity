@@ -14,10 +14,9 @@ def check_ip(ip, port, sem):
     finally:
         sem.release()
 
-# Main script
 def main():
-    network_prefix = "192.168.0"  # Network prefix Replace X with your network prefix
-    port = 80  # HTTP port
+    network_prefix = "192.168.0"
+    port = 80 
     max_threads = 15
     sem = Semaphore(max_threads)
 
