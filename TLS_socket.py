@@ -1,18 +1,22 @@
 import socket
-import threading
 from threading import Thread, Semaphore
+import time
 
-# Function to test a single IP address
+successful_ips = []
+
 def check_ip(ip, port, sem):
+    global successful_ips
     try:
         with socket.create_connection((ip, port), timeout=1) as sock:
-            print(f"Success: {ip}")
+            successful_ips.append(ip)
+    except Exception:
+        pass
     finally:
         sem.release()
 
 # Main script
 def main():
-    network_prefix = "192.X.X"  # Network prefix Replace X with your network prefix
+    network_prefix = "192.168.0"  # Network prefix Replace X with your network prefix
     port = 80  # HTTP port
     max_threads = 15
     sem = Semaphore(max_threads)
@@ -22,6 +26,13 @@ def main():
         host_ip = f"{network_prefix}.{i}"
         t = Thread(target=check_ip, args=(host_ip, port, sem,))
         t.start()
+        
+        if i == 255:
+            time.sleep(5)
+            
+    print("Successful IP addresses:")
+    for ip in successful_ips:
+        print(ip)
 
 if __name__ == "__main__":
     main()
