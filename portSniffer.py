@@ -16,7 +16,7 @@ def check_ip(ip, port, sem):
 
 def main():
     host_ip = "192.168.100"
-    max_threads = 15
+    max_threads = 20
     sem = Semaphore(max_threads)
 
     for i in range(7000):
