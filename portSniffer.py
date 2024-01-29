@@ -15,7 +15,7 @@ def check_ip(ip, port, sem):
         sem.release()
 
 def main():
-    host_ip = "192.168.100"
+    host_ip = "192.168.0.100"
     max_threads = 20
     sem = Semaphore(max_threads)
 
