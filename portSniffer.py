@@ -1,8 +1,26 @@
+## Author: Steven McGinnis
+## Date: 2/1/2024
+## Email: stevenm1@muskingum.edu
+## Purpose: This program is designed to scan a given IP address for open ports. It uses a multi-threaded approach to check the status of each port and prints the successful ports.
 import socket
 from threading import Thread, Semaphore
 import time
 
+import socket
+
 def check_port(ip, port, sem, successful_ports):
+    """
+    Check if a specific port is open on a given IP address.
+
+    Args:
+        ip (str): The IP address to check.
+        port (int): The port number to check.
+        sem (Semaphore): A semaphore object for synchronization.
+        successful_ports (list): A list to store the successful ports.
+
+    Returns:
+        None
+    """
     try:
         with socket.create_connection((ip, port), timeout=5) as sock:
             successful_ports.append(port)
@@ -14,6 +32,11 @@ def check_port(ip, port, sem, successful_ports):
         sem.release()
 
 def main():
+    """
+    This function performs port scanning on a given host IP address.
+    It uses multiple threads to check the status of each port and prints the successful ports.
+    """
+    
     host_ip = "192.168.0.100"
     max_threads = 20
     sem = Semaphore(max_threads)
@@ -32,6 +55,15 @@ def main():
     print_ports(successful_ports)
         
 def print_ports(successful_ports):
+    """
+    Prints the list of successful ports.
+    
+    Args:
+        successful_ports (list): A list of successful ports.
+    
+    Returns:
+        None
+    """
     if len(successful_ports) == 0:
         print("No successful ports found")
         return
@@ -42,8 +74,14 @@ def print_ports(successful_ports):
         print(port)
 
 def showStart():
+    """
+    Prints a message indicating the start of the port scan.
+    """
     print("Starting Port Scan")
 
 if __name__ == "__main__":
+    """
+    Namespace isolation for the main function. Not necessary, but good practice. 
+    """
     showStart()
     main()
