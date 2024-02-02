@@ -8,7 +8,7 @@ def check_port(ip, port, sem, successful_ports):
             successful_ports.append(port)
             sock.close()
             print(f"{port} Successfully Identified")
-   
+            
     finally:
         sem.release()
 
@@ -20,14 +20,13 @@ def main():
     threads = []
 
     for port in range(1, 2002):
-    	sem.acquire()
-    	t = Thread(target=check_port, args=(host_ip, port, sem, successful_ports))
-    	t.start()
-    	threads.append(t)
-    	
-    	
+        sem.acquire()
+        t = Thread(target=check_port, args=(host_ip, port, sem, successful_ports))
+        t.start()
+        threads.append(t)
+        
     for t in threads:
-    	t.join()
+        t.join()
         
     print("Successful ports:")
     sorted_ports = sorted(successful_ports)
