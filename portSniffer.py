@@ -22,7 +22,7 @@ def check_port(ip, port, sem, successful_ports):
         None
     """
     try:
-        with socket.create_connection((ip, port), timeout=5) as sock:
+        with socket.create_connection((ip, port), timeout=1) as sock:
             successful_ports.append(port)
             sock.close()
             print(f"{port} Successfully Identified")
@@ -38,7 +38,7 @@ def main():
     """
     
     host_ip = "192.168.0.100"
-    max_threads = 20
+    max_threads = 100
     sem = Semaphore(max_threads)
     successful_ports = []
     threads = []
