@@ -9,7 +9,7 @@ def check_port(ip, port, sem, successful_ports):
             sock.close()
             print(f"{port} Successfully Identified")
     except Exception:
-        print(f"{port} Failed to Identify")
+        print(f"Port {port} Not Open")
     finally:
         sem.release()
 
@@ -32,6 +32,10 @@ def main():
     print_ports(successful_ports)
         
 def print_ports(successful_ports):
+    if len(successful_ports) == 0:
+        print("No successful ports found")
+        return
+    
     print("Successful ports:")
     sorted_ports = sorted(successful_ports)
     for port in sorted_ports:
