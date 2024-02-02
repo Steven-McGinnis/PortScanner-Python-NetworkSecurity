@@ -30,7 +30,7 @@ def main():
         
     print("Successful ports:")
     sorted_ports = sorted(successful_ports)
-    for port in successful_ports:
+    for port in sorted_ports:
         print(port)
 
 def showStart():
